@@ -38,6 +38,14 @@ Route::get('/', function (Request $request) {
 });
 
 //TODO:: 兼容
+Route::get('/' . config('v2board.secure_path', config('v2board.frontend_admin_path', hash('crc32b', config('app.key')))) . '/upstreams', function () {
+    abort_unless(config('upstream.enabled'), 404);
+    return view('upstreams', [
+        'secure_path' => config('v2board.secure_path', config('v2board.frontend_admin_path', hash('crc32b', config('app.key')))),
+        'title' => config('v2board.app_name', 'V2Board'),
+    ]);
+});
+
 Route::get('/' . config('v2board.secure_path', config('v2board.frontend_admin_path', hash('crc32b', config('app.key')))), function () {
     return view('admin', [
         'title' => config('v2board.app_name', 'V2Board'),

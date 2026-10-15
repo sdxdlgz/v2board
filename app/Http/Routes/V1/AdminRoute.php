@@ -25,6 +25,12 @@ class AdminRoute
             $router->post('/plan/update', 'V1\\Admin\\PlanController@update');
             $router->post('/plan/sort', 'V1\\Admin\\PlanController@sort');
             // Server
+            $router->group(['prefix' => 'server/upstream'], function ($router) {
+                $router->get('fetch', 'V1\\Admin\\Server\\UpstreamController@fetch');
+                foreach (['save', 'refresh', 'rotateToken', 'drop'] as $action) {
+                    $router->post($action, 'V1\\Admin\\Server\\UpstreamController@' . $action);
+                }
+            });
             $router->get ('/server/group/fetch', 'V1\\Admin\\Server\\GroupController@fetch');
             $router->post('/server/group/save', 'V1\\Admin\\Server\\GroupController@save');
             $router->post('/server/group/drop', 'V1\\Admin\\Server\\GroupController@drop');

@@ -28,6 +28,9 @@
 
 <body>
 <div id="root"></div>
+@if(config('upstream.enabled'))
+<a href="/{{ $secure_path }}/upstreams" style="position:fixed;right:24px;bottom:24px;z-index:1000;padding:12px 20px;background:#125c52;color:#fff;border-radius:8px;box-shadow:0 4px 16px #0002">上游订阅</a>
+@endif
 <script src="/assets/admin/vendors.async.js?v={{$version}}"></script>
 <script src="/assets/admin/components.async.js?v={{$version}}"></script>
 <script src="/assets/admin/umi.js?v={{$version}}"></script>
