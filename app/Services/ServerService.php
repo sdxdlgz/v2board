@@ -196,6 +196,7 @@ class ServerService
         $model = ServerV2node::orderBy('sort', 'ASC');
         $v2node = $model->get()->keyBy('id');
         foreach ($v2node as $key => $v) {
+            if ($v['protocol'] === 'mieru' && !config('mieru.enabled')) continue;
             if (!$v['show']) continue;
             $v2node[$key]['type'] = 'v2node';
             $v2node[$key]['last_check_at'] = Cache::get(CacheKey::get('SERVER_V2NODE_LAST_CHECK_AT', $v['id']));

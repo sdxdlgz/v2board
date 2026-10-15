@@ -41,6 +41,10 @@ class ClashMeta
                 $item['type'] = $item['protocol'];
             }
             switch ($item['type']) {
+                case 'mieru':
+                    $proxy[] = \App\Utils\Mieru::mihomo($user['uuid'], $item);
+                    $proxies[] = $item['name'];
+                    break;
                 case 'shadowsocks':
                     $proxy[] = self::buildShadowsocks($user['uuid'], $item);
                     $proxies[] = $item['name'];

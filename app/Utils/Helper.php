@@ -182,6 +182,11 @@ class Helper
         return '';
     }
 
+    public static function buildMieruUri($uuid, $server)
+    {
+        return Mieru::uri($uuid, $server);
+    }
+
     public static function buildUriString($scheme, $auth, $server, $name, $params = [])
     {
         $host = self::formatHost($server['host']);

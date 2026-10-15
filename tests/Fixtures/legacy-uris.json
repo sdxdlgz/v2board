@@ -1,0 +1,112 @@
+{
+    "uuid": "11111111-2222-4333-8444-555555555555",
+    "server": {
+        "id": 1,
+        "name": "Legacy 测试",
+        "host": "example.invalid",
+        "port": 443,
+        "server_port": 443,
+        "created_at": 1700000000,
+        "network": "tcp",
+        "tls": 1,
+        "tls_settings": {
+            "server_name": "example.invalid",
+            "allow_insecure": 0
+        },
+        "network_settings": [],
+        "cipher": "aes-128-gcm",
+        "obfs": null,
+        "flow": "",
+        "server_name": "example.invalid",
+        "insecure": 0,
+        "version": 2,
+        "up_mbps": 100,
+        "down_mbps": 100,
+        "congestion_control": "bbr",
+        "disable_sni": 0,
+        "udp_relay_mode": "native",
+        "zero_rtt_handshake": 0
+    },
+    "cases": [
+        {
+            "type": "shadowsocks",
+            "host": "example.invalid",
+            "uri": "ss://YWVzLTEyOC1nY206MTExMTExMTEtMjIyMi00MzMzLTg0NDQtNTU1NTU1NTU1NTU1@example.invalid:443#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "shadowsocks",
+            "host": "2001:db8::1",
+            "uri": "ss://YWVzLTEyOC1nY206MTExMTExMTEtMjIyMi00MzMzLTg0NDQtNTU1NTU1NTU1NTU1@[2001:db8::1]:443#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "vmess",
+            "host": "example.invalid",
+            "uri": "vmess://eyJ2IjoiMiIsInBzIjoiTGVnYWN5IFx1NmQ0Ylx1OGJkNSIsImFkZCI6ImV4YW1wbGUuaW52YWxpZCIsInBvcnQiOiI0NDMiLCJpZCI6IjExMTExMTExLTIyMjItNDMzMy04NDQ0LTU1NTU1NTU1NTU1NSIsImFpZCI6IjAiLCJzY3kiOiJhdXRvIiwibmV0IjoidGNwIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiIiwicGF0aCI6IiIsInRscyI6InRscyIsImZwIjoiY2hyb21lIiwiYWxsb3dJbnNlY3VyZSI6MCwic25pIjoiZXhhbXBsZS5pbnZhbGlkIiwicGNzIjoiIn0=\r\n"
+        },
+        {
+            "type": "vmess",
+            "host": "2001:db8::1",
+            "uri": "vmess://eyJ2IjoiMiIsInBzIjoiTGVnYWN5IFx1NmQ0Ylx1OGJkNSIsImFkZCI6IlsyMDAxOmRiODo6MV0iLCJwb3J0IjoiNDQzIiwiaWQiOiIxMTExMTExMS0yMjIyLTQzMzMtODQ0NC01NTU1NTU1NTU1NTUiLCJhaWQiOiIwIiwic2N5IjoiYXV0byIsIm5ldCI6InRjcCIsInR5cGUiOiJub25lIiwiaG9zdCI6IiIsInBhdGgiOiIiLCJ0bHMiOiJ0bHMiLCJmcCI6ImNocm9tZSIsImFsbG93SW5zZWN1cmUiOjAsInNuaSI6ImV4YW1wbGUuaW52YWxpZCIsInBjcyI6IiJ9\r\n"
+        },
+        {
+            "type": "vless",
+            "host": "example.invalid",
+            "uri": "vless://11111111-2222-4333-8444-555555555555@example.invalid:443?type=tcp&encryption=none&host=&path=&headerType=none&quicSecurity=none&serviceName=&security=tls&flow=&fp=chrome&insecure=0&pcs=&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "vless",
+            "host": "2001:db8::1",
+            "uri": "vless://11111111-2222-4333-8444-555555555555@[2001:db8::1]:443?type=tcp&encryption=none&host=&path=&headerType=none&quicSecurity=none&serviceName=&security=tls&flow=&fp=chrome&insecure=0&pcs=&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "trojan",
+            "host": "example.invalid",
+            "uri": "trojan://11111111-2222-4333-8444-555555555555@example.invalid:443?allowInsecure=0&peer=example.invalid&sni=example.invalid&pcs=&type=tcp#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "trojan",
+            "host": "2001:db8::1",
+            "uri": "trojan://11111111-2222-4333-8444-555555555555@[2001:db8::1]:443?allowInsecure=0&peer=example.invalid&sni=example.invalid&pcs=&type=tcp#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "hysteria",
+            "host": "example.invalid",
+            "uri": "hysteria2://11111111-2222-4333-8444-555555555555@example.invalid:443/?insecure=0&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "hysteria",
+            "host": "2001:db8::1",
+            "uri": "hysteria2://11111111-2222-4333-8444-555555555555@[2001:db8::1]:443/?insecure=0&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "hysteria2",
+            "host": "example.invalid",
+            "uri": "hysteria2://11111111-2222-4333-8444-555555555555@example.invalid:443/?insecure=0&sni=example.invalid&pcs=#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "hysteria2",
+            "host": "2001:db8::1",
+            "uri": "hysteria2://11111111-2222-4333-8444-555555555555@[2001:db8::1]:443/?insecure=0&sni=example.invalid&pcs=#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "tuic",
+            "host": "example.invalid",
+            "uri": "tuic://11111111-2222-4333-8444-555555555555:11111111-2222-4333-8444-555555555555@example.invalid:443?sni=example.invalid&alpn=h3&congestion_control=bbr&allow_insecure=0&disable_sni=0&udp_relay_mode=native&pcs=#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "tuic",
+            "host": "2001:db8::1",
+            "uri": "tuic://11111111-2222-4333-8444-555555555555:11111111-2222-4333-8444-555555555555@[2001:db8::1]:443?sni=example.invalid&alpn=h3&congestion_control=bbr&allow_insecure=0&disable_sni=0&udp_relay_mode=native&pcs=#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "anytls",
+            "host": "example.invalid",
+            "uri": "anytls://11111111-2222-4333-8444-555555555555@example.invalid:443/?type=tcp&insecure=0&fp=chrome&pcs=&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        },
+        {
+            "type": "anytls",
+            "host": "2001:db8::1",
+            "uri": "anytls://11111111-2222-4333-8444-555555555555@[2001:db8::1]:443/?type=tcp&insecure=0&fp=chrome&pcs=&sni=example.invalid#Legacy%20%E6%B5%8B%E8%AF%95\r\n"
+        }
+    ]
+}

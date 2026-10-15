@@ -49,39 +49,11 @@ class StatUserJob implements ShouldQueue
         }
         $attempt = 0;
         $maxAttempts = 3;
-        $existingData = StatUser::where('record_at', $recordAt)
-        ->where('server_rate', $this->server['rate'])
-        ->whereIn('user_id', array_keys($this->data))
-        ->select(['user_id', 'id', 'u', 'd'])
-        ->get()
-        ->keyBy('user_id');
-
-        $insertData = [];
         while ($attempt < $maxAttempts) {
             try {
                 DB::beginTransaction();
-                foreach($this->data as $userId => $trafficData){
-                    if (isset($existingData[$userId])) {
-                        $userdata = StatUser::where('id', $existingData[$userId]['id'])->first();
-                        $userdata->update([
-                            'u' => $userdata['u'] + $trafficData[0],
-                            'd' => $userdata['d'] + $trafficData[1]
-                        ]);
-                    } else {
-                        $insertData[] = [
-                            'user_id' => $userId,
-                            'server_rate' => $this->server['rate'],
-                            'u' => $trafficData[0],
-                            'd' => $trafficData[1],
-                            'record_type' => $this->recordType,
-                            'record_at' => $recordAt
-                        ];
-                    }
-                }
-                if (!empty($insertData)) {
-                    collect($insertData)->chunk(500)->each(function ($chunk) {
-                        StatUser::upsert($chunk->toArray(), ['user_id', 'server_rate', 'record_at']);
-                    });
+                foreach (array_chunk($this->data, 500, true) as $chunk) {
+                    $this->incrementChunk($chunk, $recordAt);
                 }
                 DB::commit();
                 return;
@@ -97,5 +69,31 @@ class StatUserJob implements ShouldQueue
                 abort(500, '用户统计数据失败'. $e->getMessage());
             }
         }
+    }
+
+    private function incrementChunk(array $data, $recordAt)
+    {
+        $rows = [];
+        $uploadCases = [];
+        $downloadCases = [];
+        foreach ($data as $userId => $traffic) {
+            $userId = (int) $userId;
+            $rows[] = [
+                'user_id' => $userId, 'server_rate' => $this->server['rate'],
+                'record_at' => $recordAt, 'record_type' => $this->recordType,
+                'u' => 0, 'd' => 0, 'created_at' => time(), 'updated_at' => time(),
+            ];
+            $uploadCases[] = 'WHEN ' . $userId . ' THEN ' . (int) $traffic[0];
+            $downloadCases[] = 'WHEN ' . $userId . ' THEN ' . (int) $traffic[1];
+        }
+        // A competing writer may create or increment the same daily row.
+        StatUser::insertOrIgnore($rows);
+        StatUser::where('record_at', $recordAt)
+            ->where('server_rate', $this->server['rate'])
+            ->whereIn('user_id', array_keys($data))
+            ->update([
+                'u' => DB::raw('u + CASE user_id ' . implode(' ', $uploadCases) . ' END'),
+                'd' => DB::raw('d + CASE user_id ' . implode(' ', $downloadCases) . ' END'),
+            ]);
     }
 }

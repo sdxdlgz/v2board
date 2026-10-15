@@ -59,17 +59,18 @@ class TrafficUpdate extends Command
         $idList = [];
 
         foreach ($users as $user) {
-            $upload = $uploads[$user->id] ?? 0;
-            $download = $downloads[$user->id] ?? 0;
+            $upload = (int) ($uploads[$user->id] ?? 0);
+            $download = (int) ($downloads[$user->id] ?? 0);
 
-            $casesU[] = "WHEN {$user->id} THEN " . ($user->u + $upload);
-            $casesD[] = "WHEN {$user->id} THEN " . ($user->d + $download);
+            $casesU[] = "WHEN {$user->id} THEN " . $upload;
+            $casesD[] = "WHEN {$user->id} THEN " . $download;
             $idList[] = $user->id;
         }
         $idListStr = implode(',', $idList);
         $casesUStr = implode(' ', $casesU);
         $casesDStr = implode(' ', $casesD);
-        $sql = "UPDATE v2_user SET u = CASE id {$casesUStr} END, d = CASE id {$casesDStr} END, t = {$time}, updated_at = {$time} WHERE id IN ({$idListStr})";
+        // Add to the current row value, including traffic committed after the read.
+        $sql = "UPDATE v2_user SET u = u + CASE id {$casesUStr} END, d = d + CASE id {$casesDStr} END, t = {$time}, updated_at = {$time} WHERE id IN ({$idListStr})";
         try {
             DB::beginTransaction();
             DB::statement($sql);
